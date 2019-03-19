@@ -1,0 +1,13 @@
+---
+- name: create user
+  hosts: aws
+  tasks:
+   - name: create user
+     user: 
+      name: devops
+      state: present
+   - name: sudo
+     lineinfile:
+       path: /etc/sudoers
+       insertafter: 'ec2-user'
+       line: 'devops ALL=/sbin/lvextend'

@@ -1,0 +1,7 @@
+---
+ - name: display hostname
+   hosts: aws
+   tasks:
+   - name: show server name
+     debug:
+       msg: "{{ansible_hostname}},{{ansible_default_ipv4.address}}"

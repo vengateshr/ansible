@@ -1,0 +1,10 @@
+---
+ - name: taking backup
+   hosts: aws
+   become: yes
+   tasks:
+    - name: take backup from sudoers
+      fetch:
+       src: /tmp/venki
+       dest: /var/
+       flat: yes 

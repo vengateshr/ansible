@@ -1,0 +1,9 @@
+---
+ - name: taking backup
+   hosts: aws
+   tasks:
+    - name: take backup from sudoers
+      fetch:
+       src: /var/ansibledoc
+       dest: /var/
+       flat: yes 

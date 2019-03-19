@@ -1,0 +1,14 @@
+---
+- name: installing git
+  hosts: aws,localhost
+  tasks:
+   - name: git
+     yum:
+      name: git
+      state: latest
+
+   - name: service
+     service:
+      name: httpd
+      state: started
+ 
