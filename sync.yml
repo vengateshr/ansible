@@ -1,0 +1,9 @@
+---
+ - name: sync
+   hosts: ip-172-31-43-154.us-east-2.compute.internal
+   tasks:
+    - name: adfa
+      synchronize:
+       src: /etc/venki.txt
+       dest: /etc/newvenki.txt
+      delegate_to: ip-172-31-20-112.us-east-2.compute.internal
