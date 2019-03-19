@@ -1,0 +1,24 @@
+---
+- name: webserver deployment
+  hosts: aws
+  tasks:
+    - name: installation of httpd
+      yum:
+        name: httpd
+        state: latest
+    - name: copy content to create the file index.html which is not avail in nodes
+      copy:
+        content: "Hello xxx\n"
+        dest: /var/www/html/index.html
+        force: no
+    - name: use lininfile to change content
+      lineinfile: 
+        dest: /var/www/html/index.html 
+        regexp: 'Hello xxx'
+        line: 'Hello from {{ansible_hostname}}\n'
+    - name: httpd enabling
+      service:
+        name: httpd
+        state: started
+        enabled: true
+
