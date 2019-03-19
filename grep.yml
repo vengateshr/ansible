@@ -1,0 +1,6 @@
+---
+ - name: grep file
+   hosts: aws
+   tasks:
+    - name: searching aws
+      shell: grep -B 3 ec2 /etc/sudoers > /etc/venki.txt
