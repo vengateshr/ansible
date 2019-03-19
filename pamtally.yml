@@ -1,0 +1,23 @@
+---
+ - name: pam tallu
+   hosts: aws
+   tasks:
+   - name: add pam tally
+     lineinfile:
+      path: /etc/pam.d/system-auth
+      line: "{{item}}"
+     with_items:
+      - auth        required      pam_tally
+      - account     required      pam_tally
+      - auth        required      pam_tally2.so
+      - account     required      pam_tally2.so
+   - name: add pam tally
+     lineinfile:
+      path: /etc/pam.d/sshd
+      line: "{{item}}"
+     with_items:
+      - auth        required      pam_tally
+      - account     required      pam_tally
+      - auth        required      pam_tally2.so
+      - account     required      pam_tally2.so
+

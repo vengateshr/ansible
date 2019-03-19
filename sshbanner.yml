@@ -1,0 +1,8 @@
+---
+ - name: creating banner
+   hosts: aws
+   tasks:
+    - name: create ssh banner
+      copy:
+       content: " This is VENKI ansible client server "
+       dest: /etc/issue

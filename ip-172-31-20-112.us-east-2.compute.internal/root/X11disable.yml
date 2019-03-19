@@ -1,0 +1,18 @@
+---
+- name: disable x11
+  hosts: aws
+  tasks:
+   - name: taking backup
+     copy:
+      src: /etc/ssh/sshd_config
+      dest: /etc/ssh/sshd_configbkp
+   - name: disable x11
+     lineinfile:
+      path: /etc/ssh/sshd_config
+      regexp: 'X11Forwarding yes'
+      replace: 'X11Forwarding no'
+   - name: restart servide
+     service:
+      name: sshd
+      state: restarted
+

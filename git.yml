@@ -7,8 +7,3 @@
       name: git
       state: latest
 
-   - name: service
-     service:
-      name: httpd
-      state: started
- 

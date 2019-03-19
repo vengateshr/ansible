@@ -1,0 +1,7 @@
+---
+ - name: disable ip forward
+   hosts: aws
+   tasks:
+    - name: disable ip forward
+      shell: echo 0 > /proc/sys/net/ipv4/ip_forward
+
