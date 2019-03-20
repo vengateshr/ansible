@@ -1,0 +1,19 @@
+---
+- name: webserver deployment
+  hosts: aws
+  tasks:
+    - name: installation of httpd
+      yum:
+        name: httpd
+        state: latest
+      register: installstat
+    
+    - name: success install stat
+      shell:
+       cmd: echo "successfully installed "
+#       notify: sucinsstat
+      when: installstat | success
+
+#  handlers:
+#      -  name: sucinsstat
+#         debug: msg="successfully installed"

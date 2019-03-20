@@ -1,6 +1,6 @@
 ---
  - name: display hostname
-   hosts: aws
+   hosts: node1
    tasks:
    - name: show server name
      debug:
