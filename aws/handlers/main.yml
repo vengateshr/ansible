@@ -1,0 +1,3 @@
+---
+# handlers file for aws
+- import_tasks: restart.yml

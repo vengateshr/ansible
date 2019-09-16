@@ -1,0 +1,9 @@
+---
+- name: restart htppd
+  hosts: aws 
+  tasks:
+   - name: httpd enabling
+     service:
+      name: httpd
+      state: stopped
+      
