@@ -1,0 +1,131 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+metadata:
+  name: ex288-php-mysql
+  namespace: japan
+labels:
+  template: php-app
+
+parameters:
+
+- name: APPLICATION_DOMAIN
+  description: Application route domain
+  required: true
+
+- name: Hello
+  description: Greeting parameter
+  value: Audience
+  required: false
+
+objects:
+
+# MYSQL Service
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: mysql
+    labels:
+      template: php-app
+  spec:
+    ports:
+      - port: 3306
+        targetPort: 3306
+    selector:
+      name: mysql
+
+# MYSQL Deployment
+- apiVersion: apps.openshift.io/v1
+  kind: DeploymentConfig
+  metadata:
+    name: mysql
+    labels:
+      template: php-app
+  spec:
+    replicas: 1
+    selector:
+      name: mysql
+    template:
+      metadata:
+        labels:
+          name: mysql
+      spec:
+        containers:
+        - name: mysql
+          image: mysql:8.0
+          ports:
+          - containerPort: 3306
+
+# PHP Service
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: cakephp
+    labels:
+      template: php-app
+  spec:
+    ports:
+      - port: 8080
+        targetPort: 8080
+    selector:
+      name: cakephp
+
+# PHP Deployment
+- apiVersion: apps.openshift.io/v1
+  kind: DeploymentConfig
+  metadata:
+    name: cakephp
+    labels:
+      template: php-app
+  spec:
+    replicas: 1
+    selector:
+      name: cakephp
+    template:
+      metadata:
+        labels:
+          name: cakephp
+      spec:
+        containers:
+        - name: cakephp
+          image: php:8.0
+          ports:
+          - containerPort: 8080
+    triggers:
+    - type: ConfigChange
+
+# BuildConfig
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    name: cakephp
+    labels:
+      template: php-app
+  spec:
+    source:
+      type: Git
+      git:
+        uri: https://github.com/sclorg/cakephpex.git
+    strategy:
+      type: Source
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: php:8.0
+          namespace: openshift
+    output:
+      to:
+        kind: ImageStreamTag
+        name: cakephp:latest
+
+# Route
+- apiVersion: route.openshift.io/v1
+  kind: Route
+  metadata:
+    name: cakephp
+    labels:
+      template: php-app
+  spec:
+    host: ${APPLICATION_DOMAIN}
+    to:
+      kind: Service
+      name: cakephp
