@@ -9,7 +9,7 @@ labels:
 parameters:
 
 - name: APPLICATION_DOMAIN
-  description: Application route domain
+  description: Mandatory Value
   required: true
 
 - name: Hello
